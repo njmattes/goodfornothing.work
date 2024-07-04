@@ -3,6 +3,7 @@ flask
 flask-assets
 flask-session
 flask-markdown
+opencv-python
 pymongo
 redis
 imageio

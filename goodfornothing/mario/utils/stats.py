@@ -120,6 +120,20 @@ def pick_idx_from_rnd_arr(arr):
     return idx
 
 
+def stats_to_json(arr):
+    import json
+    height, width = arr.shape
+    colors = len(get_unique_colors(arr))
+    position_probs, matrix_probs = get_probability_matrix(arr)
+    with open('stats.json', 'w') as f:
+        f.write(
+            json.dumps(dict(
+                position_probs=position_probs.tolist(),
+                matrix_probs=matrix_probs.tolist(),
+            ), indent=2)
+        )
+
+
 def make_random_mario(arr):
     # Pass in the original Mario as an array. Get its height and width.
     height, width = arr.shape
@@ -222,6 +236,6 @@ if __name__ == '__main__':
     # print(get_probability_matrix(MARIO2))
     # print(get_unique_colors(MARIO2))
     # print(make_random_mario(MARIO2))
-    for i in range(127):
-        make_image(MARIODK)
-
+    # for i in range(127):
+    #     make_image(MARIODK)
+    stats_to_json(MARIODK)
