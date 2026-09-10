@@ -1,6 +1,8 @@
 (function(size, number, timer, threshold, network, cg) {
   'use strict';
 
+  const dpr = window.devicePixelRatio || 1;
+  size = size * dpr;
   const wipe_threshold = 20;
   const value_maximum = 248;
   const value_range = 64;
@@ -255,7 +257,7 @@
   const height = get_screen_height(padding);
   const area = get_screen_area(width, height);
   const pixels = shuffle_array(init_array(width, area));
-  const ctx = get_ctx(width, height, size);
+  const ctx = get_ctx(width, height, size * dpr);
 
   draw(0, ctx, area);
 

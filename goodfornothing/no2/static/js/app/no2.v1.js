@@ -1,9 +1,11 @@
 (function() {
   'use strict';
 
+  const dpr = window.devicePixelRatio || 1;
+
   const t = 100;
   const timer = 10;
-  const size = 40;
+  const size = 40 * dpr;
 
   let width = window.screen.width;
   let height = window.screen.height;

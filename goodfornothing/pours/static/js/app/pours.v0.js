@@ -1,11 +1,13 @@
 (function() {
   'use strict';
 
-  const timer = 1000;
-  const size = 40;
+  const dpr = window.devicePixelRatio || 1;
 
-  let width = window.screen.width;
-  let height = window.screen.height;
+  const timer = 1000;
+  const size = 40 * dpr;
+
+  let width = window.screen.width * dpr;
+  let height = window.screen.height * dpr;
 
   /**
    * Padding surrounding artwork

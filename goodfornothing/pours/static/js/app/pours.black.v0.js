@@ -5,10 +5,12 @@
 
   'use strict';
 
+  const dpr = window.devicePixelRatio || 1;
+
   const timer = 300;
-  const size = 40;
-  let width = window.screen.width;
-  let height = window.screen.height;
+  const size = 40 * dpr;
+  let width = window.screen.width * dpr;
+  let height = window.screen.height * dpr;
 
   /**
    * Padding surrounding artwork
