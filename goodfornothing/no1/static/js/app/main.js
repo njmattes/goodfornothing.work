@@ -1,7 +1,6 @@
 (function(size, number, timer, threshold, network, cg) {
   'use strict';
 
-  const dpr = window.devicePixelRatio || 1;
   const wipe_threshold = 20;
   const value_maximum = 248;
   const value_range = 64;
@@ -42,12 +41,14 @@
   }
 
   const get_ctx = function(width, height, size) {
+    const scale = window.devicePixelRatio;
     const canvas = d3
       .select('main')
       .append('canvas')
-      .attr('width', width * size * dpr)
-      .attr('height', height * size * dpr);
+      .attr('width', width * size * scale)
+      .attr('height', height * size * scale);
     const ctx = canvas.node().getContext('2d');
+    ctx.scale(scale, scale);
     ctx.LineCap = 'round';
     return ctx;
   }
@@ -206,7 +207,7 @@
      */
     ctx.fillStyle = `rgba(${pxl.color.concat(1).join(',')})`;
     ctx.beginPath();
-    ctx.rect(pxl.x * size * dpr, pxl.y * size * dpr, size * dpr, size * dpr);
+    ctx.rect(pxl.x * size, pxl.y * size, size, size);
     ctx.fill();
   };
 
