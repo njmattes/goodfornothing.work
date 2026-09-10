@@ -20,4 +20,4 @@ class FlaskConfig(object):
 class MongoConfig(object):
     HOST = 'localhost'
     PORT = 27017
-    DATABASE = 'goodfornothing'
+    DATABASE = 'goodfornothing.work'

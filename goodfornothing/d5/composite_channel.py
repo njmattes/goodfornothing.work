@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import numpy as np
+import mixbox
 
 
-class D5Channel(object):
-    def __init__(self, width, height, channel_name):
+class RgbCompositeChannel(object):
+    def __init__(self, width, height, channel_name, r=0, g=0, b=0):
         self._width = width
         self._height = height
         self._channel_name = channel_name
         self._n0 = .001
         self.idxs = np.zeros((height, width))
         self._array = np.zeros((height, width))
+        self.r = r / 255
+        self.g = g / 255
+        self.b = b / 255
 
     @property
     def width(self):
@@ -65,7 +69,7 @@ class D5Channel(object):
              1 - .001 ** (idx / self.height)],
         ]
         # return probs[2]
-        return probs[0]
+        return probs[7]
 
     def initial_row(self):
         """Build an initial row of randomly spaced pixels. The row contains
@@ -120,6 +124,7 @@ class D5Channel(object):
 
     def color(self):
         self.array[0] = self.idxs[0] * np.random.randint(0, 255, self.width)
+        # self.array[0] = self.idxs[0] * np.random.random(self.width)
         for i in range(1, self.height):
             hues = np.vstack((
                 self.array[i-1],
@@ -129,6 +134,7 @@ class D5Channel(object):
             hues[hues == 0] = np.nan
             hues = np.nanmean(hues, axis=0)
             hues += np.random.choice([-2, 2], self.width)
+            # hues += np.random.choice([-.01, .01], self.width)
             self.array[i] = hues * self.idxs[i]
 
     def make_idxs(self):
@@ -141,6 +147,10 @@ class D5Channel(object):
         self._array = np.zeros((self.height, self.width))
         self.make_idxs()
         self.color()
+        # return np.uint8(
+        #     np.flip(
+        #         self.array[..., np.newaxis] * np.array([self.r, self.g, self.b]),
+        #         axis=0))
         return np.uint8(np.flip(self.array, axis=0))
 
 
@@ -148,28 +158,58 @@ if __name__ == '__main__':
     from PIL import Image
     from datetime import datetime
 
-    resolution = 300
-    height = 44 * resolution / 2
-    width = 60 * resolution / 2
+    resolution = 300 / 10
+    height = int(44 * resolution)
+    width = int(60 * resolution)
 
-    w, h = np.array([width, height], dtype=int)
     # w, h = np.array([1612, 2550], dtype=np.int)
-    channel = D5Channel(w, h, 'C')
-    channel.n0 = .001
-    arr = channel.make_channel()
-    image_c = Image.fromarray(arr, mode='L')
-    arr = channel.make_channel()
-    image_m = Image.fromarray(arr, mode='L')
-    arr = channel.make_channel()
-    image_y = Image.fromarray(arr, mode='L')
-    arr = channel.make_channel()
-    image_k = Image.fromarray(arr, mode='L')
+    cyan = RgbCompositeChannel(width, height, 'C', 0, 255, 255).make_channel()
+    magenta = RgbCompositeChannel(width, height, 'M', 255, 0, 255).make_channel()
+    yellow = RgbCompositeChannel(width, height, 'Y', 255, 255, 0).make_channel()
+    black = RgbCompositeChannel(width, height, 'K', 0, 0, 0).make_channel()
+    light_magenta = RgbCompositeChannel(width, height, 'LM', 255, 128, 255).make_channel()
+    light_cyan = RgbCompositeChannel(width, height, 'LC', 128, 255, 255).make_channel()
+    light_black = RgbCompositeChannel(width, height, 'LK', 128, 128, 128).make_channel()
+    light_light_black = RgbCompositeChannel(width, height, 'LLK', 198, 198, 198).make_channel()
 
-    image_k.save('out_g.jpg', 'JPEG')
+    # separations = np.stack([
+    #     cyan, magenta, yellow, black, light_magenta,
+    #     light_cyan, light_black, light_light_black], axis=3)
 
-    image = Image.merge(mode='CMYK', bands=[image_c, image_m, image_y, image_k])
+    # composite = separations.sum(axis=3)
+    # print(composite)
+    # print(composite.shape)
+    # print(composite[:,:,0].shape)
 
-    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-cmyk.jpg'.format(datetime.now()), 'JPEG')
+    # for r in range(height):
+    #     for c in range(width):
+    #         print(separations[r, c].sum(axis=1))
 
-    # image = Image.merge(mode='RGB', bands=[image_c, image_m, image_y])
-    # image.save('out.png', 'PNG')
+
+    # image = Image.merge(mode='CMYK', bands=[image_c, image_m, image_y, image_k])
+
+    # image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-cmyk.jpg'.format(datetime.now()), 'JPEG')
+
+    # image = Image.merge(
+    #     mode='RGB', bands=[
+    #         Image.fromarray(composite[:, :, 0] / 255., mode='L'),
+    #         Image.fromarray(composite[:, :, 1] / 255., mode='L'),
+    #         Image.fromarray(composite[:, :, 2] / 255., mode='L'),
+    #         ])
+
+    image = Image.fromarray(cyan, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-c.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(magenta, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-m.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(yellow, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-y.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(black, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-k.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(light_cyan, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-lc.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(light_magenta, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-lm.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(light_black, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-lk.png'.format(datetime.now()), 'PNG')
+    image = Image.fromarray(light_light_black, mode='L')
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-llk.png'.format(datetime.now()), 'PNG')
