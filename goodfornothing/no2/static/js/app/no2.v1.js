@@ -1,11 +1,9 @@
 (function() {
   'use strict';
 
-  const dpr = window.devicePixelRatio || 1;
-
   const t = 100;
   const timer = 10;
-  const size = 40 * dpr;
+  const size = 40;
 
   let width = window.screen.width;
   let height = window.screen.height;
@@ -27,12 +25,14 @@
    * Add <canvas> to <main> with width and height attributes set to
    * fill the screen. Save context and set lineCap.
    */
+  const scale = window.devicePixelRatio;
   const canvas = d3
     .select('main')
     .append('canvas')
-    .attr('width', width * size)
-    .attr('height', height * size);
+    .attr('width', width * size * scale)
+    .attr('height', height * size * scale);
   const ctx = canvas.node().getContext('2d');
+  ctx.scale(scale, scale);
   ctx.LineCap = 'round';
 
   d3.json(`/no2/static/js/app/no2_exp1.5.json`, {
