@@ -2,7 +2,6 @@
   'use strict';
 
   const dpr = window.devicePixelRatio || 1;
-  size = size * dpr;
   const wipe_threshold = 20;
   const value_maximum = 248;
   const value_range = 64;
@@ -46,8 +45,8 @@
     const canvas = d3
       .select('main')
       .append('canvas')
-      .attr('width', width * size)
-      .attr('height', height * size);
+      .attr('width', width * size * dpr)
+      .attr('height', height * size * dpr);
     const ctx = canvas.node().getContext('2d');
     ctx.LineCap = 'round';
     return ctx;
@@ -207,7 +206,7 @@
      */
     ctx.fillStyle = `rgba(${pxl.color.concat(1).join(',')})`;
     ctx.beginPath();
-    ctx.rect(pxl.x * size, pxl.y * size, size, size);
+    ctx.rect(pxl.x * size * dpr, pxl.y * size * dpr, size * dpr, size * dpr);
     ctx.fill();
   };
 
@@ -257,7 +256,7 @@
   const height = get_screen_height(padding);
   const area = get_screen_area(width, height);
   const pixels = shuffle_array(init_array(width, area));
-  const ctx = get_ctx(width, height, size * dpr);
+  const ctx = get_ctx(width, height, size);
 
   draw(0, ctx, area);
 
