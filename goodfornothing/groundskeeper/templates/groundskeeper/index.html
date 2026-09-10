@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title_extra %}(Groundskeeper){% endblock %}
+{% block head_css %}
+  <link rel=stylesheet
+        href={{ url_for('groundskeeper.static', filename='css/main.css') }}>
+{% endblock %}
+{% block body_js %}
+<script src={{ url_for('static', filename='js/vendor/d3.v5.min.js') }}></script>
+<script src={{ url_for('groundskeeper.static', filename='js/main.js') }}></script>
+{% endblock %}
