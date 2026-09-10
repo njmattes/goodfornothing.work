@@ -66,11 +66,11 @@
     ctx.fillStyle = OPTIONS.fg;
     ctx.beginPath();
     let pt = get_point_from_indices(0);
-    console.log(pt);
+    console.debug('draw_polygon() pt', pt);
     ctx.moveTo(pt[0], pt[1]);
     for (let i = 1; i < points.length; ++i) {
       let pt = get_point_from_indices(i);
-      console.log(pt);
+      console.debug('draw_polygon() forloop pt', pt);
       ctx.lineTo(pt[0], pt[1]);
     }
     ctx.closePath();
@@ -79,9 +79,9 @@
 
   const init = function init() {
     points = pick_initial_points();
-    console.log(points);
+    console.debug('init() points', points);
     ctx.fillStyle = OPTIONS.bg;
-    console.log(canvas.width);
+    console.debug('init() canvas.width', canvas.width);
     ctx.fillRect(0, 0, canvas.node().width, canvas.node().height);
   };
 
