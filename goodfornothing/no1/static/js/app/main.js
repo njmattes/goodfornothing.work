@@ -1,4 +1,8 @@
 (function(size, number, timer, threshold, network, cg) {
+  /**
+   Good-for-nothing (no. 1) [2020--21]
+   */
+
   'use strict';
 
   const wipe_threshold = 20;

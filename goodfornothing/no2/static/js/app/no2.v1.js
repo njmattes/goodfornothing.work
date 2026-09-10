@@ -1,4 +1,8 @@
 (function() {
+  /**
+   Good-for-nothing (no. 2) [2021]
+   */
+
   'use strict';
 
   const t = 100;

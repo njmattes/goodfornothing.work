@@ -1,4 +1,7 @@
 (function(OPTIONS) {
+  /**
+   Good-for-nothing (pixilated) [2021]
+   */
   'use strict';
 
   const WIDTH = document.body.clientWidth;

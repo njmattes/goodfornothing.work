@@ -1,4 +1,8 @@
 (function() {
+  /**
+   Good-for-nothing (pours) [2021]
+   */
+
   'use strict';
 
   const dpr = window.devicePixelRatio || 1;

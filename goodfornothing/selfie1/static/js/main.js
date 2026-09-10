@@ -1,4 +1,8 @@
 (function() {
+  /**
+   Good-for-nothing (Selfie #1) [2019]
+   */
+
   'use strict';
 
   /**
