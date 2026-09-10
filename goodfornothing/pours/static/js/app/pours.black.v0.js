@@ -347,7 +347,7 @@
       idx_b = math.reshape(math.zeros(height * width), [height, width]);
     }
 
-    // setTimeout(draw.bind({}, t, idx), timer);
+    setTimeout(draw.bind({}, t, idx), timer);
 
   }
 
