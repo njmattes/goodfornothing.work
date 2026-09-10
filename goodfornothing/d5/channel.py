@@ -4,11 +4,11 @@ import numpy as np
 
 
 class D5Channel(object):
-    def __init__(self, width, height, name):
+    def __init__(self, width, height, channel_name):
         self._width = width
         self._height = height
-        self._name = name
-        self._n0 = .1
+        self._channel_name = channel_name
+        self._n0 = .001
         self.idxs = np.zeros((height, width))
         self._array = np.zeros((height, width))
 
@@ -21,8 +21,8 @@ class D5Channel(object):
         return self._height
 
     @property
-    def name(self):
-        return self._name
+    def channel_name(self):
+        return self._channel_name
 
     @property
     def array(self):
@@ -54,9 +54,18 @@ class D5Channel(object):
              .5 ** (idx / self.height / 4)],
             [.5 ** (idx / self.height / 1),
              1 - .5 ** (idx / self.height / 1)],
-            [.9, .1]
+            [.9, .1],
+            [.5 ** (idx / self.height / .1),
+             1 - .5 ** (idx / self.height / .1)],
+            [.33 ** (idx / self.height / .1),
+             1 - .33 ** (idx / self.height / .1)],
+            [.1 ** (idx / self.height / .1),
+             1 - .1 ** (idx / self.height / .1)],
+            [.001 ** (idx / self.height),
+             1 - .001 ** (idx / self.height)],
         ]
-        return probs[2]
+        # return probs[2]
+        return probs[0]
 
     def initial_row(self):
         """Build an initial row of randomly spaced pixels. The row contains
@@ -88,16 +97,26 @@ class D5Channel(object):
         :rtype: np.array
         """
         previous = self.idxs[idx-1]
+        # print('previous:', previous)
         non_white_idxs = np.where(previous > 0)[0]
+        # print('non_wht_indxs:', non_white_idxs)
         movement = np.random.choice([-1, 0, 1], len(non_white_idxs))
+        # print('movement:', movement)
         new_idxs = non_white_idxs + movement
+        # print('new_idxs:', new_idxs)
         new_idxs[new_idxs >= self.width] = self.width - 1
+        # print('new_idxs:', new_idxs)
         new_idxs[new_idxs < 0] = 0
+        # print('new_idxs:', new_idxs)
+        # print('self.idxs[idx, :]:', self.idxs[idx, :])
         self.idxs[idx, new_idxs] = 1
+        # print('self.idxs[idx, :]:', self.idxs[idx, :])
         self.idxs[idx, self.idxs[idx] == 0] = np.random.choice(
             [0, 1], len(self.idxs[idx, self.idxs[idx] == 0]),
             p=self.new_pixel_probability(idx)
         )
+        # print('self.idxs[i-1, :]:', self.idxs[idx-1, :])
+        # print('self.idxs[idx, :]:', self.idxs[idx, :])
 
     def color(self):
         self.array[0] = self.idxs[0] * np.random.randint(0, 255, self.width)
@@ -127,9 +146,16 @@ class D5Channel(object):
 
 if __name__ == '__main__':
     from PIL import Image
-    w, h = np.array([1612, 2550], dtype=np.int)
+    from datetime import datetime
+
+    resolution = 300
+    height = 44 * resolution / 2
+    width = 60 * resolution / 2
+
+    w, h = np.array([width, height], dtype=int)
+    # w, h = np.array([1612, 2550], dtype=np.int)
     channel = D5Channel(w, h, 'C')
-    channel.n0 = .01
+    channel.n0 = .001
     arr = channel.make_channel()
     image_c = Image.fromarray(arr, mode='L')
     arr = channel.make_channel()
@@ -142,7 +168,8 @@ if __name__ == '__main__':
     image_k.save('out_g.jpg', 'JPEG')
 
     image = Image.merge(mode='CMYK', bands=[image_c, image_m, image_y, image_k])
-    image.save('out_cmyk.jpg', 'JPEG')
+
+    image.save('{:%y%m%d-%H%M%S}-0-001-gfn-out-cmyk.jpg'.format(datetime.now()), 'JPEG')
 
     # image = Image.merge(mode='RGB', bands=[image_c, image_m, image_y])
     # image.save('out.png', 'PNG')
