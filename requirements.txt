@@ -1,8 +1,9 @@
 numpy
-flask
+flask==2.3.1
 flask-assets
 flask-session
 flask-markdown
+markdown
 pymongo
 redis
 imageio
