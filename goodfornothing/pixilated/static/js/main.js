@@ -6,8 +6,8 @@
 
   const WIDTH = document.body.clientWidth;
   const HEIGHT = document.body.clientHeight;
-  const M = Math.floor(WIDTH / OPTIONS.size) - 1;
-  const N = Math.floor(HEIGHT / OPTIONS.size) - 1;
+  const M = Math.ceil(WIDTH / OPTIONS.size);
+  const N = Math.ceil(HEIGHT / OPTIONS.size);
   const xs = Array.from(Array(M),
     (d, index) => index * OPTIONS.size +
       (WIDTH - (M - 1) * OPTIONS.size) / 2);
