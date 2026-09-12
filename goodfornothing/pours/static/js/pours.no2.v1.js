@@ -11,13 +11,6 @@
   let height = window.screen.height;
 
   /**
-   * Padding surrounding artwork
-   * @type {{top: number, left: number, bottom: number, right: number}}
-   */
-  width = Math.ceil(width / 2 / size) * 2;
-  height = Math.ceil(height / 2 / size) * 2;
-
-  /**
    * Add <canvas> to <main> with width and height attributes set to
    * fill the screen. Save context and set lineCap.
    */
@@ -25,12 +18,19 @@
   const canvas = d3
     .select('main')
     .append('canvas')
-    .attr('width', width * size * scale)
-    .attr('height', height * size * scale)
-    .attr('style', `height:${height * size}px;width:${width * size}px;`);
+    .attr('width', width * scale)
+    .attr('height', height * scale)
+    .attr('style', `height:${height * scale}px;width:${width * scale}px;`);
   const ctx = canvas.node().getContext('2d');
   ctx.scale(scale, scale);
   ctx.LineCap = 'round';
+
+  /**
+   * Padding surrounding artwork
+   * @type {{top: number, left: number, bottom: number, right: number}}
+   */
+  width = Math.ceil(width / 2 / size) * 2;
+  height = Math.ceil(height / 2 / size) * 2;
 
   // The probability of a pixel in the top row being non-empty
   const n0 = 0.02;
