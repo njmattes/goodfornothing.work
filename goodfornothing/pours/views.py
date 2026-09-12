@@ -23,3 +23,9 @@ def no2():
     return render_template(
         'pours.no2.html',
     )
+
+@mod.route('/3')
+def no3():
+    return render_template(
+        'pours.no3.html',
+    )
