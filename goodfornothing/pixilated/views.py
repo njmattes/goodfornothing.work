@@ -21,19 +21,19 @@ def api():
     )
 
 @pixilated.route('/')
-@pixilated.route('/no1')
+@pixilated.route('/1')
 def no1():
     return render_template(
         'pixilated.no1.html',
     )
 
-@pixilated.route('/no2')
+@pixilated.route('/2')
 def no2():
     return render_template(
         'pixilated.no2.html',
     )
 
-@pixilated.route('/no3')
+@pixilated.route('/3')
 def no3():
     return render_template(
         'pixilated.no3.html',

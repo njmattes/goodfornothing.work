@@ -11,6 +11,7 @@ mod = Blueprint('pours', __name__,
 
 
 @mod.route('/')
+@mod.route('/1')
 def index():
     return render_template(
         'pours.no1.html',
@@ -18,7 +19,7 @@ def index():
 
 
 @mod.route('/2')
-def black():
+def no2():
     return render_template(
         'pours.no2.html',
     )
