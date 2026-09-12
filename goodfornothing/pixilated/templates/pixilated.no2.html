@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title_extra %}(Tunnel/stack #1){% endblock %}
+{% block head_css %}
+  <link rel=stylesheet
+        href={{ url_for('main.static', filename='css/gfn.css') }}?1>
+  <style>
+  body { background-color: {{ bg }};}
+  </style>
+{% endblock %}
+{% block body_js %}
+  <script src={{ url_for('static', filename='js/vendor/d3.v5.min.js') }}></script>
+  <script>
+    const OPTIONS = {
+      size: {{ size }},
+      sides: {{ sides }},
+      fg: '{{ 'rgba({}, {})'.format(fg, opacity) }}',
+      bg: '{{ 'rgba({}, 1)'.format(bg) }}',
+      opacity: {{ opacity }},
+      time: {{ time }}
+    };
+  </script>
+  <script src={{ url_for('pixilated.static', filename='js/pixilated.no2.v0.js') }}?1></script>
+{% endblock %}

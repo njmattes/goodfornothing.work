@@ -1,18 +1,21 @@
 (function() {
   /**
-   Good-for-nothing (pixilated no. 1) [2021]
+   Good-for-nothing (pixilated no. 3) [2026]
    */
   'use strict';
 
   const OPTIONS = {
-    size: 20,
+    size: 40,
     sides: 4,
-    opacity: .05,
-    fg: 'rgba(0, 0, 0, .05)',
-    bg: 'rgba(255, 255, 255)',
+    opacity: .01,
+    fg: 'oklch(.9 .5 10 / .01)',
+    bg: 'oklch(.1 .5 20 / 1)',
     time: 300,
+    start_time: 5,
+    time_exp: .1,
   };
 
+  d3.select('body').attr('style', `background-color:${OPTIONS.bg}`)
 
   const WIDTH = document.body.clientWidth;
   const HEIGHT = document.body.clientHeight;
@@ -26,6 +29,7 @@
       (HEIGHT - (N - 1) * OPTIONS.size) / 2);
   let points;
   let timer;
+  let time_step = OPTIONS.start_time;
 
   const scale = window.devicePixelRatio;
   const canvas = d3.select('main')
@@ -59,6 +63,9 @@
   };
 
   const pick_initial_points = function pick_initial_points() {
+    /**
+     * TODO: Use polar coordinates to make number of sides flexible?
+     */
     return [
       [ Math.floor(Math.random() * M / 2),
         Math.floor(Math.random() * N / 2) ],
@@ -104,10 +111,11 @@
   const repeat = function repeat() {
     draw_polygon(points);
     points = pick_different_random_point(points);
-
+    time_step = time_step ** OPTIONS.time_exp * OPTIONS.time ** (1 - OPTIONS.time_exp)
+    console.debug('time_step:', time_step)
     timer = setTimeout(
       repeat,
-      OPTIONS.time,
+      time_step,
     );
   };
 

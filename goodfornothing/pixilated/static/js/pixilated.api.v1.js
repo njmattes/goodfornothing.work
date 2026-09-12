@@ -1,18 +1,8 @@
-(function() {
+(function(OPTIONS) {
   /**
-   Good-for-nothing (pixilated no. 1) [2021]
+   Good-for-nothing API
    */
   'use strict';
-
-  const OPTIONS = {
-    size: 20,
-    sides: 4,
-    opacity: .05,
-    fg: 'rgba(0, 0, 0, .05)',
-    bg: 'rgba(255, 255, 255)',
-    time: 300,
-  };
-
 
   const WIDTH = document.body.clientWidth;
   const HEIGHT = document.body.clientHeight;
@@ -114,4 +104,4 @@
   init();
   repeat();
 
-})();
+})(OPTIONS);
