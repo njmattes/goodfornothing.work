@@ -12,12 +12,12 @@ walldrawing = Blueprint(
 @walldrawing.route('/2019')
 def walldrawing_2019():
     return render_template(
-        'walldrawings/2019.html'
+        'walldrawing.2019.html'
     )
 
 
 @walldrawing.route('/6114a')
 def walldrawing_6114a():
     return render_template(
-        'walldrawings/6114a.html'
+        'walldrawing.6114a.html'
     )

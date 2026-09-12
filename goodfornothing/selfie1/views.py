@@ -11,5 +11,5 @@ selfie1 = Blueprint(
 @selfie1.route('/')
 def index():
     return render_template(
-        'selfie1/index.html'
+        'selfie1.html'
     )

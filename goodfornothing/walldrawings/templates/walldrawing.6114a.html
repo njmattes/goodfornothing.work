@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title_extra %}(Wall drawing 6114a){% endblock %}
+{% block head_css %}
+  <link rel=stylesheet
+        href={{ url_for('walldrawings.static', filename='css/walldrawing.6114a.css') }}>
+{% endblock %}
+{% block body_js %}
+<script src={{ url_for('main.static', filename='js/vendor/d3.v5.min.js') }}></script>
+<script src={{ url_for('walldrawings.static', filename='js/walldrawing.6114a.main.js') }}?8></script>
+{% endblock %}

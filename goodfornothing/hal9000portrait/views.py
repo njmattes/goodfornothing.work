@@ -13,5 +13,5 @@ mod = Blueprint('hal9000portrait', __name__,
 @mod.route('/')
 def index():
     return render_template(
-        'hal9000portrait/index.html'
+        'hal9000.html'
     )
