@@ -8,16 +8,6 @@
   </style>
 {% endblock %}
 {% block body_js %}
-  <script src={{ url_for('static', filename='js/vendor/d3.v5.min.js') }}></script>
-  <script>
-    const OPTIONS = {
-      size: {{ size }},
-      sides: {{ sides }},
-      fg: '{{ 'rgba({}, {})'.format(fg, opacity) }}',
-      bg: '{{ 'rgba({}, 1)'.format(bg) }}',
-      opacity: {{ opacity }},
-      time: {{ time }}
-    };
-  </script>
+  <script src={{ url_for('static', filename='js/vendor/d3.v5.min.js') }}></script>\
   <script src={{ url_for('pixilated.static', filename='js/pixilated.no3.v0.js') }}?1></script>
 {% endblock %}
