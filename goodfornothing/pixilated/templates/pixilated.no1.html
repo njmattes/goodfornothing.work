@@ -8,7 +8,7 @@
   </style>
 {% endblock %}
 {% block body_js %}
-  <script src={{ url_for('static', filename='js/vendor/d3.v5.min.js') }}></script>
+  <script src={{ url_for('main.static', filename='js/vendor/d3.v5.min.js') }}></script>
   <script>
     const OPTIONS = {
       size: {{ size }},
@@ -19,5 +19,5 @@
       time: {{ time }}
     };
   </script>
-  <script src={{ url_for('pixilated.static', filename='js/main.js') }}?1></script>
+  <script src={{ url_for('pixilated.static', filename='js/pixilated.no1.v1.js') }}?1></script>
 {% endblock %}

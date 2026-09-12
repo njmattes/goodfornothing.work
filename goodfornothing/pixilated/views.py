@@ -11,7 +11,7 @@ pixilated = Blueprint(
 @pixilated.route('/')
 def index():
     return render_template(
-        'tunnelstacks/index.html',
+        'pixilated.no1.html',
         size=request.args.get('size') or 20,
         sides=request.args.get('sides') or 4,
         fg=request.args.get('user') or '0, 0, 0',

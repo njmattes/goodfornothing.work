@@ -13,12 +13,12 @@ mod = Blueprint('pours', __name__,
 @mod.route('/')
 def index():
     return render_template(
-        'pours/index.html',
+        'pours.no1.html',
     )
 
 
 @mod.route('/2')
 def black():
     return render_template(
-        'pours/black.html',
+        'pours.no2.html',
     )

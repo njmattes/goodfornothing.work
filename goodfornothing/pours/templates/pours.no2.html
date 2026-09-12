@@ -2,15 +2,15 @@
 {% block title_extra %}(Pours){% endblock %}
 {% block head_css %}
   <link rel=stylesheet
-        href={{ url_for('no2.static', filename='css/no1a.css') }}>
+        href={{ url_for('no2.static', filename='css/main.css') }}>
 {% endblock %}
 {% block body_js %}
 {#<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>#}
 {#<script src="https://unpkg.com/mathjs@9.4.4/"></script>#}
-<script src={{ url_for('no2.static', filename='js/vendor/math.js') }}></script>
-<script src={{ url_for('no2.static', filename='js/vendor/d3.v5.min.js') }}></script>
+<script src={{ url_for('main.static', filename='js/vendor/math.js') }}></script>
+<script src={{ url_for('main.static', filename='js/vendor/d3.v5.min.js') }}></script>
 <script>
 </script>
 
-<script src={{ url_for('pours.static', filename='js/app/pours.black.v0.js') }}></script>
+<script src={{ url_for('pours.static', filename='js/pours.no2.v1.js') }}></script>
 {% endblock %}
