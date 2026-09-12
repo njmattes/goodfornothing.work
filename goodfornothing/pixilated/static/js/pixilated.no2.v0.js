@@ -15,9 +15,7 @@
     time_exp: .1,
   };
 
-  d3.select('body').attr('style', `background-color:${OPTIONS.bg}`)
-
-  const WIDTH = document.body.clientWidth;
+    const WIDTH = document.body.clientWidth;
   const HEIGHT = document.body.clientHeight;
   const M = Math.ceil(WIDTH / OPTIONS.size);
   const N = Math.ceil(HEIGHT / OPTIONS.size);
@@ -118,6 +116,8 @@
       time_step,
     );
   };
+
+  d3.select('body').attr('style', `background-color:${OPTIONS.bg}`)
 
   init();
   repeat();
