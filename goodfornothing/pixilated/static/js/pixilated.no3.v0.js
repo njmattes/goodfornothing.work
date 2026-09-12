@@ -8,8 +8,8 @@
     size: 40,
     sides: 4,
     opacity: .01,
-    fg: 'oklch(.9 .5 10 / .01)',
-    bg: 'oklch(.1 .5 20 / 1)',
+    fg: '.9 .5 10',
+    bg: '.1 .5 20',
     time: 300,
     start_time: 5,
     time_exp: .1,
@@ -28,6 +28,9 @@
     (d, index) => index * OPTIONS.size +
       (HEIGHT - (N - 1) * OPTIONS.size) / 2);
   let points;
+
+  const erasure_prob = .5;
+
   let timer;
   let time_step = OPTIONS.start_time;
 
@@ -41,6 +44,17 @@
     .node()
     .getContext('2d');
   ctx.scale(scale, scale);
+
+  const get_fg = function get_fg(reverse) {
+    if (reverse) {
+      return `oklch(${OPTIONS.bg} / ${OPTIONS.opacity})`;
+    }
+    return `oklch(${OPTIONS.fg} / ${OPTIONS.opacity})`;
+  }
+
+  const get_bg = function get_bg() {
+    return `oklch(${OPTIONS.bg} / 1)`;
+  }
 
   const pick_different_random_point = function pick_different_random_point(points) {
     for (let i = 0; i < points.length; ++i) {
@@ -85,8 +99,8 @@
     ];
   };
 
-  const draw_polygon = function draw_polygon(points) {
-    ctx.fillStyle = OPTIONS.fg;
+  const draw_polygon = function draw_polygon(points, fg) {
+    ctx.fillStyle = fg;
     ctx.beginPath();
     let pt = get_point_from_indices(0);
     console.debug('draw_polygon() pt', pt);
@@ -103,13 +117,14 @@
   const init = function init() {
     points = pick_initial_points();
     console.debug('init() points', points);
-    ctx.fillStyle = OPTIONS.bg;
+    ctx.fillStyle = get_bg();
     console.debug('init() canvas.width', canvas.width);
     ctx.fillRect(0, 0, canvas.node().width, canvas.node().height);
   };
 
   const repeat = function repeat() {
-    draw_polygon(points);
+    let fg = get_fg(Math.random() < erasure_prob);
+    draw_polygon(points, fg);
     points = pick_different_random_point(points);
     time_step = time_step ** OPTIONS.time_exp * OPTIONS.time ** (1 - OPTIONS.time_exp)
     console.debug('time_step:', time_step)
