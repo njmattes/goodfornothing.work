@@ -46,14 +46,14 @@
 
   const get_ctx = function() {
     const scale = window.devicePixelRatio;
+    const width = window.screen.width * scale;
+    const height = window.screen.height * scale;
     const canvas = d3
       .select('main')
       .append('canvas')
-      // .attr('width', width * size * scale)
-      // .attr('height', height * size * scale)
-      .attr('width', window.screen.width * scale)
-      .attr('height', window.screen.height * scale)
-      .attr('style', `height:${window.screen.height}px;width:${window.screen.width}px;`);
+      .attr('width', width)
+      .attr('height', height)
+      .attr('style', `height:${height}px;width:${width}px;`);
     const ctx = canvas.node().getContext('2d');
     ctx.scale(scale, scale);
     ctx.LineCap = 'round';
