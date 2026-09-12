@@ -44,7 +44,7 @@
     return width * height
   }
 
-  const get_ctx = function(width, height, size) {
+  const get_ctx = function() {
     const scale = window.devicePixelRatio;
     const canvas = d3
       .select('main')
@@ -53,7 +53,7 @@
       // .attr('height', height * size * scale)
       .attr('width', window.screen.width * scale)
       .attr('height', window.screen.height * scale)
-      .attr('style', `height:${window.screen.height * size}px;width:${window.screen.width * size}px;`);
+      .attr('style', `height:${window.screen.height}px;width:${window.screen.width}px;`);
     const ctx = canvas.node().getContext('2d');
     ctx.scale(scale, scale);
     ctx.LineCap = 'round';
@@ -264,7 +264,7 @@
   const height = get_screen_height(padding);
   const area = get_screen_area(width, height);
   const pixels = shuffle_array(init_array(width, area));
-  const ctx = get_ctx(width, height, size);
+  const ctx = get_ctx();
 
   draw(0, ctx, area);
 
