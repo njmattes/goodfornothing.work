@@ -5,13 +5,11 @@
 
   'use strict';
 
-  const dpr = window.devicePixelRatio || 1;
-
   const timer = 1000;
-  const size = 40 * dpr;
+  const size = 40;
 
-  let width = window.screen.width * dpr;
-  let height = window.screen.height * dpr;
+  let width = window.screen.width;
+  let height = window.screen.height;
 
   /**
    * Padding surrounding artwork
@@ -24,12 +22,15 @@
    * Add <canvas> to <main> with width and height attributes set to
    * fill the screen. Save context and set lineCap.
    */
+  const scale = window.devicePixelRatio;
   const canvas = d3
     .select('main')
     .append('canvas')
-    .attr('width', width * size)
-    .attr('height', height * size);
+    .attr('width', width * size * scale)
+    .attr('height', height * size * scale)
+    .attr('style', `height:${height * size}px;width:${width * size}px;`);
   const ctx = canvas.node().getContext('2d');
+  ctx.scale(scale, scale);
   ctx.LineCap = 'round';
 
   const get_previous_row = function get_previous_row(idxs, idx) {

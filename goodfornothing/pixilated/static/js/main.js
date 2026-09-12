@@ -17,13 +17,16 @@
   let points;
   let timer;
 
+  const scale = window.devicePixelRatio;
   const canvas = d3.select('main')
     .append('canvas')
-    .attr('width', WIDTH)
-    .attr('height', HEIGHT);
+    .attr('width', WIDTH * scale)
+    .attr('height', HEIGHT * scale)
+    .attr('style', `height:${HEIGHT}px;width:${WIDTH}px;`);
   const ctx = canvas
     .node()
     .getContext('2d');
+  ctx.scale(scale, scale);
 
   const pick_different_random_point = function pick_different_random_point(points) {
     for (let i = 0; i < points.length; ++i) {

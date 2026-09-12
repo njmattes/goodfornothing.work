@@ -50,7 +50,8 @@
       .select('main')
       .append('canvas')
       .attr('width', width * size * scale)
-      .attr('height', height * size * scale);
+      .attr('height', height * size * scale)
+      .attr('style', `height:${height * size}px;width:${width * size}px;`);
     const ctx = canvas.node().getContext('2d');
     ctx.scale(scale, scale);
     ctx.LineCap = 'round';
