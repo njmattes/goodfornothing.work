@@ -1,6 +1,6 @@
 (function() {
   /**
-   Good-for-nothing (no. 2) [2021]
+   Good-for-nothing (no. 2) [2020]
    */
 
   'use strict';

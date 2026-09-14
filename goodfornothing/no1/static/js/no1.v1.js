@@ -1,6 +1,6 @@
 (function(size, number, timer, threshold, network, cg) {
   /**
-   Good-for-nothing (no. 1) [2020--21]
+   Good-for-nothing (no. 1) [2019--20]
    */
 
   'use strict';
